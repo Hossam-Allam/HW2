@@ -1,0 +1,9 @@
+[Unit]
+Description=DataPulse Backup Service
+
+[Service]
+ExecStart=/bin/bash /home/user/datapulse/scripts/backup.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

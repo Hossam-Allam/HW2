@@ -1,0 +1,9 @@
+[Unit]
+Description=DataPulse Analytics Service
+
+[Service]
+ExecStart=/bin/bash /home/user/datapulse/scripts/analyze.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
