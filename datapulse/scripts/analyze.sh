@@ -3,6 +3,6 @@
 echo "Starting analysis..."
 for i in {1..5}; do
   echo "Analyzing batch $i..."
-  sleep 2
+  sleep 100
 done
 echo "Analysis complete!"
