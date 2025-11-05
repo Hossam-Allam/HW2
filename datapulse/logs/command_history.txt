@@ -1,0 +1,70 @@
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ ./analyze.sh > ../logs/analyze_output.log 2>&1 &
+[1] 22751
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ ./backup.sh  > ../logs/backup_output.log  2>&1 &
+[2] 22824
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ ps -l
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    9826    9815  0  80   0 -  3264 do_wai pts/5    00:00:00 bash
+0 S  1000   22751    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 analyze.sh
+0 S  1000   22753   22751  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 S  1000   22824    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 backup.sh
+0 S  1000   22826   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 R  1000   22929    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ sudo renice -10 -p 22751
+[sudo] password for hossam: 
+22751 (process ID) old priority 0, new priority -10
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ ps -l
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    9826    9815  0  80   0 -  3264 do_wai pts/5    00:00:00 bash
+0 S  1000   22751    9826  0  70 -10 -  1844 do_wai pts/5    00:00:00 analyze.sh
+0 S  1000   22824    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 backup.sh
+0 S  1000   22826   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 S  1000   23456   22751  0  70 -10 -  1444 hrtime pts/5    00:00:00 sleep
+0 R  1000   23487    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/scripts$ cd ../logs
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ ps -l > process_report.txt
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat process_report.txt
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    9826    9815  0  80   0 -  3264 do_wai pts/5    00:00:00 bash
+0 S  1000   22751    9826  0  70 -10 -  1844 do_wai pts/5    00:00:00 analyze.sh
+0 S  1000   22824    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 backup.sh
+0 S  1000   23456   22751  0  70 -10 -  1444 hrtime pts/5    00:00:00 sleep
+0 S  1000   23489   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 R  1000   23713    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status analytics.service
+Unit analytics.service could not be found.
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status analytics.service &> service_status.log
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status backup.service   &>> service_status.log
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ date >> service_status.log
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat process_report.txt service_status.log | tee daily_summary.txt
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    9826    9815  0  80   0 -  3264 do_wai pts/5    00:00:00 bash
+0 S  1000   22751    9826  0  70 -10 -  1844 do_wai pts/5    00:00:00 analyze.sh
+0 S  1000   22824    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 backup.sh
+0 S  1000   23456   22751  0  70 -10 -  1444 hrtime pts/5    00:00:00 sleep
+0 S  1000   23489   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 R  1000   23713    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
+Unit analytics.service could not be found.
+Unit backup.service could not be found.
+Wed Nov  5 09:28:26 PM +03 2025
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat <<EOF > report_header.txt
+DataPulse Daily System Report
+Generated on: $(date)
+EOF
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat report_header.txt daily_summary.txt > final_report.txt
+
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat final_report.txt | wc -l >> final_report.txt

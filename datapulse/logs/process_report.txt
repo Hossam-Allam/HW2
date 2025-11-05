@@ -1,0 +1,7 @@
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    9826    9815  0  80   0 -  3264 do_wai pts/5    00:00:00 bash
+0 S  1000   22751    9826  0  70 -10 -  1844 do_wai pts/5    00:00:00 analyze.sh
+0 S  1000   22824    9826  0  80   0 -  1844 do_wai pts/5    00:00:00 backup.sh
+0 S  1000   23456   22751  0  70 -10 -  1444 hrtime pts/5    00:00:00 sleep
+0 S  1000   23489   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
+0 R  1000   23713    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
