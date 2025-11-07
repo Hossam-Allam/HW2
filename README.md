@@ -32,7 +32,7 @@ efficiently and the logs are well-documented.
 Your first task is to manage running processes related to analytics and
 backups.
 
-1.  Run both scripts (`analyze.sh` and `backup.sh`) as **background jobs**. You can run a script by simply writing './analyze.sh' Make sure to redirect the output of **both** scripts to **separate** files in the log folder. For example, analyze_output.log
+1.  Head over to /scripts and run both scripts (`analyze.sh` and `backup.sh`) as **background jobs**. You can run a script by simply writing './analyze.sh' Make sure to redirect the output of **both** scripts to **separate** files in the log folder. For example, analyze_output.log (Keep in mind the scripts run for about 8 mins, so complete this phase before that or run them again)
 2.  Use `ps` or `top` to verify they're running and note down their
     **PIDs**.
 3.  Increase the priority of `analyze.sh` (give it more CPU time) using
@@ -45,12 +45,13 @@ backups.
 
 ## 🧭 Phase 2: Service Monitoring
 
-Your company uses **systemd** to manage services.
+Your company needs to monitor and log services.
 
-1.  Use `systemctl status` to check whether `analytics.service` and
-    `backup.service` are active (Don't panic if the service can't be found).
-2.  Redirect both outputs (stdout + stderr) into a single file called
-    `service_status.log` in the `logs` folder (Make sure not to overwrite).
+1.  Head over to /logs and display the contents of both service files (analytics.service and backup.service) and redirect their output (stdout + stderr) into a single file called service_status.log in the logs folder.
+
+2.  Make sure the second command appends to the same log file instead of overwriting it.
+    (Hint: use &>> for appending.)
+
 3.  Append today's date (using 'Date' command) to the end of `service_status.log` using a
     redirection operator.
 
