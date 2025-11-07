@@ -39,12 +39,10 @@ F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
 0 S  1000   23489   22824  0  80   0 -  1444 hrtime pts/5    00:00:00 sleep
 0 R  1000   23713    9826  0  80   0 -  2519 -      pts/5    00:00:00 ps
 
-hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status analytics.service
-Unit analytics.service could not be found.
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat ../services/analytics.service &> service_status.log
 
-hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status analytics.service &> service_status.log
+hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ cat ../services/backup.service &>> service_status.log
 
-hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ systemctl status backup.service   &>> service_status.log
 
 hossam@LAPTOP-E89A8K1B:~/repos/HW2/datapulse/logs$ date >> service_status.log
 
